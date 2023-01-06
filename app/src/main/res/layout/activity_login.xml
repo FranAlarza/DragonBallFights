@@ -8,30 +8,42 @@
     android:gravity="center"
     tools:context=".LoginActivity">
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/horizontal_base"
+        android:src="@drawable/db_logo"/>
 
     <EditText
         android:id="@+id/editTextLoginName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="50dp"
-        android:layout_marginTop="100dp"
-        android:ems="10"
+        android:layout_marginHorizontal="@dimen/horizontal_base"
+        android:hint="@string/nombre_o_email"
         android:inputType="textEmailAddress" />
 
     <EditText
         android:id="@+id/editTextLoginPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="50dp"
+        android:layout_marginHorizontal="@dimen/horizontal_base"
         android:layout_marginTop="20dp"
-        android:ems="10"
+        android:hint="@string/password"
         android:inputType="textPassword" />
 
+    <CheckBox
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/horizontal_base"
+        android:text="@string/remember_password"/>
+
     <Button
+        android:id="@+id/LoginButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="80dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="50dp"
+        android:backgroundTint="@color/orange"
         android:gravity="center"
         android:text="@string/entrar"
         />

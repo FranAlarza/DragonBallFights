@@ -2,13 +2,15 @@ package com.franalarza.dragonballfights
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.core.content.ContextCompat
+import com.franalarza.dragonballfights.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityLoginBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
-
-        var color = ContextCompat.getColor(this, R.color.purple_200)
+        binding = ActivityLoginBinding.inflate(layoutInflater)
+        setContentView(binding.root)
     }
 }
