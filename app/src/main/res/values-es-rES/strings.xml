@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Dragon Ball Fights</string>
+    <string name="entrar">Entrar</string>
+    <string name="nombre_o_email">Email o nombre de usuario</string>
+    <string name="password">Contraseña</string>
+    <string name="remember_password">Recordar mi contraseña</string>
+</resources>

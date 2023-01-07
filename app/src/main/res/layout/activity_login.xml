@@ -20,6 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/horizontal_base"
         android:hint="@string/nombre_o_email"
+        android:backgroundTint="@color/red"
         android:inputType="textEmailAddress" />
 
     <EditText
@@ -29,6 +30,7 @@
         android:layout_marginHorizontal="@dimen/horizontal_base"
         android:layout_marginTop="20dp"
         android:hint="@string/password"
+        android:backgroundTint="@color/red"
         android:inputType="textPassword" />
 
     <CheckBox
@@ -37,7 +39,7 @@
         android:layout_marginHorizontal="@dimen/horizontal_base"
         android:text="@string/remember_password"/>
 
-    <Button
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/LoginButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

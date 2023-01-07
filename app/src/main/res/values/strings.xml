@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Dragon Ball Fights</string>
-    <string name="entrar">Entrar</string>
-    <string name="nombre_o_email">Nombre o email</string>
+    <string name="entrar">Login</string>
+    <string name="nombre_o_email">Email or username</string>
     <string name="password">Password</string>
-    <string name="remember_password">Recordar mi contraseña</string>
+    <string name="remember_password">Remember my password</string>
 </resources>
