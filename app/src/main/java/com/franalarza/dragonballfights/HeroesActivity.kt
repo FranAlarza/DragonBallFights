@@ -13,12 +13,6 @@ class HeroesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityHeroesBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        createRecycler()
     }
 
-    private fun createRecycler() {
-        binding.rwHeroes.adapter = HeroesAdapter()
-        binding.rwHeroes.layoutManager = LinearLayoutManager(this)
-    }
 }
