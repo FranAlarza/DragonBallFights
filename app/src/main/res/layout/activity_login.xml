@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context=".LoginActivity">
+    tools:context=".activities.LoginActivity">
 
     <ImageView
         android:layout_width="wrap_content"
@@ -21,7 +21,8 @@
         android:layout_marginHorizontal="@dimen/horizontal_base"
         android:hint="@string/nombre_o_email"
         android:backgroundTint="@color/red"
-        android:inputType="textEmailAddress" />
+        android:inputType="textEmailAddress"
+        android:focusableInTouchMode="true"/>
 
     <EditText
         android:id="@+id/editTextLoginPassword"
@@ -39,14 +40,22 @@
         android:layout_marginHorizontal="@dimen/horizontal_base"
         android:text="@string/remember_password"/>
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
+
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/LoginButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="80dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="24dp"
         android:backgroundTint="@color/orange"
         android:gravity="center"
         android:text="@string/entrar"
         />
+
 </LinearLayout>
