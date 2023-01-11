@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/horizontal_base"
         android:hint="@string/nombre_o_email"
-        android:backgroundTint="@color/red"
+        android:backgroundTint="@color/orange"
         android:inputType="textEmailAddress"
         android:focusableInTouchMode="true"/>
 
@@ -31,10 +31,11 @@
         android:layout_marginHorizontal="@dimen/horizontal_base"
         android:layout_marginTop="20dp"
         android:hint="@string/password"
-        android:backgroundTint="@color/red"
+        android:backgroundTint="@color/orange"
         android:inputType="textPassword" />
 
     <CheckBox
+        android:id="@+id/rememberCheck"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/horizontal_base"
