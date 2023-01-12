@@ -1,40 +1,47 @@
 package com.franalarza.dragonballfights.activities
 
-import android.content.Context
 import android.content.Intent
-import android.content.res.ColorStateList
-import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
 import android.view.View
+import android.widget.CheckBox
+import android.widget.EditText
 import androidx.activity.viewModels
-import androidx.core.content.ContextCompat
-import com.franalarza.dragonballfights.R
 import com.franalarza.dragonballfights.databinding.ActivityLoginBinding
 import com.franalarza.dragonballfights.utils.DataStore
 import com.franalarza.dragonballfights.viewModels.LoginActivityViewModel
-import kotlin.properties.Delegates
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
     private val viewModel: LoginActivityViewModel by viewModels()
     private lateinit var dataStore: DataStore
+    private var userTextField: EditText? = null
+    private var passwordTextField: EditText? = null
+    private var checkBox: CheckBox? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
         dataStore = DataStore(this)
+        userTextField = binding.editTextLoginName
+        passwordTextField = binding.editTextLoginPassword
+        checkBox = binding.rememberCheck
         setListeners()
         setLoginState()
     }
 
     private fun setListeners() {
         binding.LoginButton?.setOnClickListener {
-            val user = binding.editTextLoginName?.text.toString()
-            val password = binding.editTextLoginPassword?.text.toString()
-            viewModel.getToken(user, password)
+            val user = userTextField?.text.toString()
+            val pass = passwordTextField?.text.toString()
+            viewModel.getToken(user, pass)
+        }
+
+        passwordTextField?.setOnFocusChangeListener { _, hasFocus ->
+           if (hasFocus) passwordTextField?.text = getPassword()
         }
     }
 
@@ -47,14 +54,16 @@ class LoginActivity : AppCompatActivity() {
 
                 is LoginActivityViewModel.LoginActivityState.ErrorToken -> {
                     binding.progressBar?.visibility = View.GONE
-                    binding.editTextLoginName?.backgroundTintList =
-                        ContextCompat.getColorStateList(this, R.color.red)
-                    binding.editTextLoginPassword?.backgroundTintList =
-                        ContextCompat.getColorStateList(this, R.color.red)
+
                 }
 
                 is LoginActivityViewModel.LoginActivityState.SuccessToken -> {
                     binding.progressBar?.visibility = View.GONE
+                    val key = userTextField?.text.toString()
+                    val value = passwordTextField?.text.toString()
+                    if (checkBox?.isChecked == true) {
+                        dataStore.savePassword(key,value)
+                    }
                     navigateToHeroesList()
                 }
             }
@@ -64,6 +73,12 @@ class LoginActivity : AppCompatActivity() {
     private fun navigateToHeroesList() {
         val intent = Intent(this, HeroesActivity::class.java)
         startActivity(intent)
+    }
+
+    private fun getPassword(): Editable? {
+        val key = userTextField?.text.toString()
+        val password = dataStore.readPassword(key)
+        return Editable.Factory.getInstance().newEditable(password)
     }
 
 }

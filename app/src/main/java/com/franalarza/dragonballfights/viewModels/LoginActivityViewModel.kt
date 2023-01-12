@@ -1,19 +1,13 @@
 package com.franalarza.dragonballfights.viewModels
 
-import android.app.Application
-import android.content.Context
-import android.content.Intent
-import android.content.SharedPreferences
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.franalarza.dragonballfights.utils.DataStore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import okhttp3.*
 import okhttp3.RequestBody.Companion.toRequestBody
-import okio.ByteString.Companion.decodeBase64
 import java.io.IOException
 import java.util.Base64
 
