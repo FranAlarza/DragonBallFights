@@ -4,9 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.franalarza.dragonballfights.databinding.HeroItemBinding
+import com.franalarza.dragonballfights.models.HeroLive
 import com.franalarza.dragonballfights.models.Heroe
 
-class HeroesAdapter(val heroList: List<Heroe>): RecyclerView.Adapter<HeroesAdapter.HeroesViewHolder>() {
+class HeroesAdapter(val heroList: List<HeroLive>): RecyclerView.Adapter<HeroesAdapter.HeroesViewHolder>() {
 
     inner class HeroesViewHolder(private val binding: HeroItemBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(position: Int) {

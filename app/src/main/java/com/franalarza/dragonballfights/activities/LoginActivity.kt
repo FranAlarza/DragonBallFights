@@ -20,6 +20,7 @@ class LoginActivity : AppCompatActivity() {
     private var userTextField: EditText? = null
     private var passwordTextField: EditText? = null
     private var checkBox: CheckBox? = null
+    private val TOKEN_KEY = "token"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,7 +31,7 @@ class LoginActivity : AppCompatActivity() {
         passwordTextField = binding.editTextLoginPassword
         checkBox = binding.rememberCheck
         setListeners()
-        setLoginState()
+        setLoginStateObserver()
     }
 
     private fun setListeners() {
@@ -45,7 +46,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun setLoginState() {
+    private fun setLoginStateObserver() {
         viewModel.loginState.observe(this) {
             when (it) {
                 is LoginActivityViewModel.LoginActivityState.Loading -> {
@@ -59,10 +60,10 @@ class LoginActivity : AppCompatActivity() {
 
                 is LoginActivityViewModel.LoginActivityState.SuccessToken -> {
                     binding.progressBar?.visibility = View.GONE
-                    val key = userTextField?.text.toString()
-                    val value = passwordTextField?.text.toString()
+                    val user = userTextField?.text.toString()
+                    val pass = passwordTextField?.text.toString()
                     if (checkBox?.isChecked == true) {
-                        dataStore.savePassword(key,value)
+                        dataStore.savePassword(user,pass)
                     }
                     navigateToHeroesList()
                 }
@@ -72,6 +73,8 @@ class LoginActivity : AppCompatActivity() {
 
     private fun navigateToHeroesList() {
         val intent = Intent(this, HeroesActivity::class.java)
+        intent.putExtra(DataStore.TOKEN_KEY, viewModel.token)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
     }
 

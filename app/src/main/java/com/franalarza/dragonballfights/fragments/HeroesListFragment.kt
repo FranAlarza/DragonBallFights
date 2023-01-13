@@ -5,25 +5,22 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.franalarza.dragonballfights.R
 import com.franalarza.dragonballfights.adapters.HeroesAdapter
 import com.franalarza.dragonballfights.databinding.ActivityHeroesBinding
 import com.franalarza.dragonballfights.databinding.FragmentHeroesListBinding
+import com.franalarza.dragonballfights.models.HeroLive
 import com.franalarza.dragonballfights.models.Heroe
+import com.franalarza.dragonballfights.viewModels.HeroesActivityViewModel
 
 
-class HeroesListFragment : Fragment() {
-
-    companion object {
-        fun newInstance() = HeroesListFragment()
-    }
-
-    private var heroes = listOf(
-        Heroe("1", "Goku", "El Masca", "photo-1"),
-        Heroe("2", "Trunks", "Mato a freezer y ya", "photo-2"))
+class HeroesListFragment() : Fragment() {
 
     private lateinit var binding: FragmentHeroesListBinding
+    private val viewModel: HeroesActivityViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,6 +37,6 @@ class HeroesListFragment : Fragment() {
 
     private fun createRecycler() {
         binding.rwHeroes.layoutManager = LinearLayoutManager(this.context)
-        binding.rwHeroes.adapter = HeroesAdapter(heroes)
+        binding.rwHeroes.adapter = viewModel.heroesList?.let { HeroesAdapter(it) }
     }
 }

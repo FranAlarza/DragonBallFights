@@ -39,11 +39,9 @@ class LoginActivityViewModel : ViewModel() {
 
             override fun onResponse(call: Call, response: Response) {
                 val responseToken = response.body?.string()
-                Log.e("RESPONSE", response.code.toString())
                 if (response.code == 200) {
                     responseToken?.let {
-                        setValueOnMainThread(
-                            LoginActivityViewModel.LoginActivityState.SuccessToken(it))
+                        setValueOnMainThread(LoginActivityViewModel.LoginActivityState.SuccessToken(it))
                         token = it
                         Log.d("TOKEN", token)
                     }
