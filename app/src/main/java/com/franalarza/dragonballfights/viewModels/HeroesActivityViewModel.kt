@@ -1,6 +1,7 @@
 package com.franalarza.dragonballfights.viewModels
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -14,7 +15,8 @@ import java.io.IOException
 
 class HeroesActivityViewModel : ViewModel() {
 
-    var heroesList: List<HeroLive>? = null
+    var heroesList = mutableListOf<HeroLive>()
+
     val heroesState: MutableLiveData<HeroesActivityViewModel.HeroesActivityState> by lazy {
         MutableLiveData<HeroesActivityViewModel.HeroesActivityState>()
     }
@@ -42,10 +44,10 @@ class HeroesActivityViewModel : ViewModel() {
                 val heroesResponse: Array<Heroe> = Gson().fromJson(responseBody, Array<Heroe>::class.java)
                 var heroes = heroesResponse.map {
                     HeroLive(it.id, it.name, it.description, it.photo, energy = 100)
-                }
+                }.toMutableList()
                 setValueOnMainThread(HeroesActivityState.SuccessHeroList(heroes))
                 heroesList = heroes
-                Log.d("Heroes", heroesList.toString())
+                Log.d("Heroes Respomnse", heroesList.toString())
             }
 
         })
@@ -58,9 +60,13 @@ class HeroesActivityViewModel : ViewModel() {
         }
     }
 
+    fun getHeroes(): MutableList<HeroLive> {
+        return heroesList
+    }
+
     sealed class HeroesActivityState {
         object Loading : HeroesActivityState()
-        data class SuccessHeroList(val heroList: List<HeroLive>) : HeroesActivityState()
+        data class SuccessHeroList(val heroList: MutableList<HeroLive>) : HeroesActivityState()
         data class FailureHeroList(val error: String) : HeroesActivityState()
     }
 }

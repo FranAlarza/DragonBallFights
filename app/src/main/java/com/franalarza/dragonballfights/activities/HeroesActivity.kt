@@ -21,6 +21,7 @@ class HeroesActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHeroesBinding
     private val viewModel: HeroesActivityViewModel by viewModels()
     private lateinit var navBar: BottomNavigationView
+    var list = mutableListOf<HeroLive>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,7 +32,6 @@ class HeroesActivity : AppCompatActivity() {
         getHeroesList()
         setListeners()
         setObservers()
-        replaceFragment(HeroesListFragment())
     }
 
     private fun setObservers() {
@@ -45,6 +45,7 @@ class HeroesActivity : AppCompatActivity() {
                 }
                 is HeroesActivityViewModel.HeroesActivityState.SuccessHeroList -> {
                     binding.pbHeroes.visibility = View.GONE
+                    replaceFragment(HeroesListFragment(it.heroList))
                 }
             }
         }
@@ -56,7 +57,7 @@ class HeroesActivity : AppCompatActivity() {
             when(it.itemId) {
 
                 R.id.heroesItemNav -> {
-                    replaceFragment(HeroesListFragment())
+                    replaceFragment(HeroesListFragment(viewModel.getHeroes()))
                 }
                 R.id.battleItemNav -> replaceFragment(BattleFragment())
             }
