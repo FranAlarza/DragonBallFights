@@ -5,5 +5,6 @@ data class HeroLive(
     val name: String,
     val description: String,
     val photo: String,
-    val energy: Int
+    var energy: Int,
+    var isAvailable: Boolean
 )

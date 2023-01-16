@@ -6,11 +6,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.franalarza.dragonballfights.R
+import com.franalarza.dragonballfights.activities.CallBackHeroFighters
 import com.franalarza.dragonballfights.adapters.HeroesAdapter
 import com.franalarza.dragonballfights.databinding.ActivityHeroesBinding
 import com.franalarza.dragonballfights.databinding.FragmentHeroesListBinding
@@ -22,6 +25,7 @@ import com.franalarza.dragonballfights.viewModels.HeroesActivityViewModel
 class HeroesListFragment(private val heroes: MutableList<HeroLive>) : Fragment() {
 
     private lateinit var binding: FragmentHeroesListBinding
+    private var fighters = mutableListOf<HeroLive>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,10 +40,19 @@ class HeroesListFragment(private val heroes: MutableList<HeroLive>) : Fragment()
         createRecycler()
     }
 
-    private fun createRecycler() {
-        val adapter = HeroesAdapter(heroes)
-        binding.rwHeroesList.adapter = adapter
-        binding.rwHeroesList.layoutManager = LinearLayoutManager(context)
+    private fun onItemSelected(fighters: MutableList<HeroLive>) {
+        var activity = activity as? CallBackHeroFighters
+        activity?.passFighters(fighters)
+    }
 
+    private fun createRecycler() {
+        val manager = LinearLayoutManager(context)
+        val adapter = HeroesAdapter(heroes) {
+            onItemSelected(it)
+        }
+        val decoration = DividerItemDecoration(context, manager.orientation)
+        binding.rwHeroesList.adapter = adapter
+        binding.rwHeroesList.layoutManager = manager
+        binding.rwHeroesList.addItemDecoration(decoration)
     }
 }

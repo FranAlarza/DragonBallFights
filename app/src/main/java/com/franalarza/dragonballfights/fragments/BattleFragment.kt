@@ -5,17 +5,19 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.franalarza.dragonballfights.R
-import com.franalarza.dragonballfights.databinding.ActivityLoginBinding
+import android.widget.Toast
+import androidx.fragment.app.viewModels
+import com.bumptech.glide.Glide
 import com.franalarza.dragonballfights.databinding.FragmentBattleBinding
+import com.franalarza.dragonballfights.models.HeroLive
+import com.franalarza.dragonballfights.viewModels.HeroesActivityViewModel
 
-class BattleFragment : Fragment() {
+class BattleFragment(private val fighters: MutableList<HeroLive>) : Fragment() {
 
-    companion object {
-        fun newInstance() = BattleFragment()
-    }
 
     private lateinit var binding: FragmentBattleBinding
+    private val viewModel: HeroesActivityViewModel by viewModels()
+    private var round = 1
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -23,6 +25,64 @@ class BattleFragment : Fragment() {
     ): View? {
         binding = FragmentBattleBinding.inflate(inflater)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        if (fighters.size > 0) {
+            setDataFighters()
+        }
+        setListeners()
+    }
+
+    private fun setListeners() {
+        binding.fabClear.setOnClickListener {
+            fighters.clear()
+            refreshFragment()
+        }
+
+        binding.fabRound.setOnClickListener {
+
+            var pbFirstFighter = binding.pbFighter1
+            var pbSecondFighter = binding.pbFighter2
+            viewModel.executeRound(fighters, pbFirstFighter, pbSecondFighter) {
+
+                if (fighters[0].energy <= 0 || fighters[1].energy <= 0) {
+                    val winner = fighters.first { it.energy > 0 }
+                    val looser = fighters.first { it.energy <= 0 }
+                    Toast.makeText(context, "El ganador es ${winner.name}", Toast.LENGTH_LONG).show()
+                    looser.isAvailable = false
+                }
+            }
+            round++
+            binding.fabRound.text = "Round $round"
+        }
+
+    }
+
+    private fun setDataFighters() {
+        if (fighters.size == 1) {
+            Glide.with(binding.ivFighter1.context).load(fighters[0].photo).into(binding.ivFighter1)
+            binding.tvNameFighter1.text = fighters[0].name
+            binding.pbFighter1.progress = fighters[0].energy
+        } else {
+            Glide.with(binding.ivFighter1.context).load(fighters[0].photo).into(binding.ivFighter1)
+            binding.tvNameFighter1.text = fighters[0].name
+            binding.pbFighter1.progress = fighters[0].energy
+
+            Glide.with(binding.ivFighter2.context).load(fighters[1].photo).into(binding.ivFighter2)
+            binding.tvNameFighter2.text = fighters[1].name
+            binding.pbFighter2.progress = fighters[1].energy
+        }
+
+    }
+
+    private fun refreshFragment() {
+
+        val fragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
+        fragmentTransaction.remove(this)
+        fragmentTransaction?.detach(BattleFragment(fighters))?.attach(BattleFragment(fighters))
+            ?.commitNow()
     }
 
 }

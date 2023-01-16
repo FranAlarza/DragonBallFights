@@ -3,6 +3,7 @@ package com.franalarza.dragonballfights.activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,11 +18,15 @@ import com.franalarza.dragonballfights.viewModels.HeroesActivityViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class HeroesActivity : AppCompatActivity() {
+interface CallBackHeroFighters {
+    fun passFighters(heroesToFight: MutableList<HeroLive>)
+}
+
+class HeroesActivity : AppCompatActivity(), CallBackHeroFighters {
     private lateinit var binding: ActivityHeroesBinding
     private val viewModel: HeroesActivityViewModel by viewModels()
     private lateinit var navBar: BottomNavigationView
-    var list = mutableListOf<HeroLive>()
+    private var fighters = mutableListOf<HeroLive>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,8 +40,8 @@ class HeroesActivity : AppCompatActivity() {
     }
 
     private fun setObservers() {
-        viewModel.heroesState.observe(this) {
-            when(it) {
+        viewModel.heroesState.observe(this) { it ->
+            when (it) {
                 is HeroesActivityViewModel.HeroesActivityState.Loading -> {
                     binding.pbHeroes.visibility = View.VISIBLE
                 }
@@ -54,12 +59,11 @@ class HeroesActivity : AppCompatActivity() {
     private fun setListeners() {
 
         navBar.setOnItemSelectedListener {
-            when(it.itemId) {
+            when (it.itemId) {
 
-                R.id.heroesItemNav -> {
-                    replaceFragment(HeroesListFragment(viewModel.getHeroes()))
-                }
-                R.id.battleItemNav -> replaceFragment(BattleFragment())
+                R.id.heroesItemNav -> replaceFragment(HeroesListFragment(viewModel.getHeroes()))
+
+                R.id.battleItemNav -> replaceFragment(BattleFragment(fighters))
             }
             true
         }
@@ -70,6 +74,7 @@ class HeroesActivity : AppCompatActivity() {
         viewModel.getHeroesList(token = userToken)
     }
 
+
     private fun replaceFragment(fragment: Fragment) {
 
         val fragmentManager = supportFragmentManager
@@ -79,4 +84,13 @@ class HeroesActivity : AppCompatActivity() {
             .commitNow()
     }
 
+    override fun passFighters(heroesToFight: MutableList<HeroLive>) {
+        fighters = heroesToFight
+        Toast.makeText(
+            this,
+            "${heroesToFight[0].name} and your opponent is ${heroesToFight[1].name}",
+            Toast.LENGTH_SHORT
+        ).show()
+
+    }
 }

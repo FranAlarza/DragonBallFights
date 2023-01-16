@@ -8,16 +8,24 @@ import com.franalarza.dragonballfights.databinding.HeroItemBinding
 import com.franalarza.dragonballfights.models.HeroLive
 import com.franalarza.dragonballfights.models.Heroe
 
-class HeroesAdapter(private val heroList: MutableList<HeroLive>): RecyclerView.Adapter<HeroesAdapter.HeroesViewHolder>() {
+class HeroesAdapter(private val heroList: MutableList<HeroLive>, private val onHeroClicked: (MutableList<HeroLive>) -> Unit): RecyclerView.Adapter<HeroesAdapter.HeroesViewHolder>() {
 
-    val list: List<HeroLive> = listOf(
-        HeroLive("1", "Goku", "sdgvsdfg", "photo-1", 100),
-        HeroLive("2", "Gotham", "sdgvsdfg", "photo-2", 100))
 
     inner class HeroesViewHolder(private val binding: HeroItemBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(position: Int) {
+        fun bind(position: Int, onHeroClicked: (MutableList<HeroLive>) -> Unit) {
             Glide.with(binding.heroImage.context).load(heroList[position].photo).into(binding.heroImage)
             binding.heroName.text = heroList[position].name
+            if (!heroList[position].isAvailable) {
+                !itemView.isClickable
+            }
+
+            itemView.setOnClickListener {
+                val fighters = mutableListOf<HeroLive>()
+                val heroSelected = heroList[position]
+                val opponent = heroList.filter { it.name != heroSelected.name }.random()
+                fighters.addAll(mutableListOf(heroSelected, opponent))
+                onHeroClicked(fighters)
+            }
         }
     }
 
@@ -34,7 +42,7 @@ class HeroesAdapter(private val heroList: MutableList<HeroLive>): RecyclerView.A
     }
 
     override fun onBindViewHolder(holder: HeroesViewHolder, position: Int) {
-        holder.bind(position)
+        holder.bind(position, onHeroClicked)
     }
 
     fun updateData(newList: List<HeroLive>) {
