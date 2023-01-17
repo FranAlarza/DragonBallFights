@@ -63,7 +63,9 @@ class HeroesActivity : AppCompatActivity(), CallBackHeroFighters {
 
                 R.id.heroesItemNav -> replaceFragment(HeroesListFragment(viewModel.getHeroes()))
 
-                R.id.battleItemNav -> replaceFragment(BattleFragment(fighters))
+                R.id.battleItemNav -> if (fighters.size == 2) {
+                    replaceFragment(BattleFragment(fighters))
+                }
             }
             true
         }

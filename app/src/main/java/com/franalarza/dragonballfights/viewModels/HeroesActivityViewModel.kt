@@ -1,7 +1,9 @@
 package com.franalarza.dragonballfights.viewModels
 
+import android.content.Context
 import android.util.Log
 import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -46,7 +48,7 @@ class HeroesActivityViewModel : ViewModel() {
                 var heroes = heroesResponse.map {
                     HeroLive(it.id, it.name, it.description, it.photo, energy = 100, true)
                 }
-                val filteredHeroes = heroes.filter { it.photo.contains("https") }.toMutableList()
+                val filteredHeroes = heroes.filter { it.photo.contains("alfabeta") }.toMutableList()
                 setValueOnMainThread(HeroesActivityState.SuccessHeroList(filteredHeroes))
 
                 heroesList = filteredHeroes
@@ -87,6 +89,22 @@ class HeroesActivityViewModel : ViewModel() {
                 it.energy -= newLife
             }
         }
+    }
+
+    fun setWinner(heroes: MutableList<HeroLive>, context: Context) {
+        val searchWinner = heroes.filter { it.energy > 0 }
+
+        if (searchWinner.size == 1) {
+            Toast.makeText(context, "The winner is ${searchWinner.first().name}!!", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    fun restartBattle(fighters: MutableList<HeroLive>, lifeFighterOne: ProgressBar, lifeFighterTwo: ProgressBar) {
+        fighters[0].energy = 100
+        fighters[1].energy = 100
+
+        lifeFighterOne.progress = 100
+        lifeFighterTwo.progress = 100
     }
 
 

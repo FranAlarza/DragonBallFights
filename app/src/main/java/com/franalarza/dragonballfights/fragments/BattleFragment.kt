@@ -37,8 +37,10 @@ class BattleFragment(private val fighters: MutableList<HeroLive>) : Fragment() {
 
     private fun setListeners() {
         binding.fabClear.setOnClickListener {
-            fighters.clear()
-            refreshFragment()
+            binding.fabRound.isEnabled = true
+            viewModel.restartBattle(fighters, binding.pbFighter1, binding.pbFighter2)
+            binding.fabRound.text = "Round 1"
+            round = 1
         }
 
         binding.fabRound.setOnClickListener {
@@ -49,9 +51,9 @@ class BattleFragment(private val fighters: MutableList<HeroLive>) : Fragment() {
 
                 if (fighters[0].energy <= 0 || fighters[1].energy <= 0) {
                     val winner = fighters.first { it.energy > 0 }
-                    val looser = fighters.first { it.energy <= 0 }
                     Toast.makeText(context, "El ganador es ${winner.name}", Toast.LENGTH_LONG).show()
-                    looser.isAvailable = false
+                    binding.fabRound.isEnabled = false
+                    round = 0
                 }
             }
             round++
@@ -75,14 +77,6 @@ class BattleFragment(private val fighters: MutableList<HeroLive>) : Fragment() {
             binding.pbFighter2.progress = fighters[1].energy
         }
 
-    }
-
-    private fun refreshFragment() {
-
-        val fragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
-        fragmentTransaction.remove(this)
-        fragmentTransaction?.detach(BattleFragment(fighters))?.attach(BattleFragment(fighters))
-            ?.commitNow()
     }
 
 }

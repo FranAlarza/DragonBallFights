@@ -5,5 +5,5 @@
         android:icon="@drawable/ic_round_list_24" />
     <item android:title="@string/battle"
         android:id="@+id/battleItemNav"
-        android:icon="@drawable/ic_baseline_electric_bolt_24"/>
+        android:icon="@drawable/ic_baseline_electric_bolt_24" />
 </menu>

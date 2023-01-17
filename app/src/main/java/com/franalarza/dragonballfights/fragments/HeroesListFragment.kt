@@ -25,7 +25,7 @@ import com.franalarza.dragonballfights.viewModels.HeroesActivityViewModel
 class HeroesListFragment(private val heroes: MutableList<HeroLive>) : Fragment() {
 
     private lateinit var binding: FragmentHeroesListBinding
-    private var fighters = mutableListOf<HeroLive>()
+    private val viewModel: HeroesActivityViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,6 +38,7 @@ class HeroesListFragment(private val heroes: MutableList<HeroLive>) : Fragment()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         createRecycler()
+        context?.let { viewModel.setWinner(heroes, it) }
     }
 
     private fun onItemSelected(fighters: MutableList<HeroLive>) {
@@ -50,9 +51,12 @@ class HeroesListFragment(private val heroes: MutableList<HeroLive>) : Fragment()
         val adapter = HeroesAdapter(heroes) {
             onItemSelected(it)
         }
+        adapter.updateData(heroes)
         val decoration = DividerItemDecoration(context, manager.orientation)
         binding.rwHeroesList.adapter = adapter
         binding.rwHeroesList.layoutManager = manager
         binding.rwHeroesList.addItemDecoration(decoration)
     }
+
+
 }

@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="@dimen/horizontal_base">
+    android:padding="16dp">
 
     <ImageView
         android:id="@+id/heroImage"
@@ -16,13 +16,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/notAvailableMarker"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/ic_baseline_block_24"
+        app:layout_constraintStart_toStartOf="@+id/heroImage"
+        app:layout_constraintEnd_toEndOf="@+id/heroImage"
+        app:layout_constraintTop_toTopOf="@+id/heroImage"
+        app:layout_constraintBottom_toBottomOf="@+id/heroImage"
+        android:visibility="gone"/>
+
     <TextView
         android:id="@+id/heroName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="12dp"
+        android:padding="12dp"
         android:gravity="center"
         android:text="Nombre Superheroe"
+        android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/heroImage" />
