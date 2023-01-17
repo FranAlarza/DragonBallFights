@@ -1,4 +1,4 @@
-package com.franalarza.dragonballfights.activities
+package com.franalarza.dragonballfights.ui.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,10 +8,10 @@ import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.franalarza.dragonballfights.R
-import com.franalarza.dragonballfights.adapters.HeroesAdapter
+import com.franalarza.dragonballfights.ui.adapters.HeroesAdapter
 import com.franalarza.dragonballfights.databinding.ActivityHeroesBinding
-import com.franalarza.dragonballfights.fragments.BattleFragment
-import com.franalarza.dragonballfights.fragments.HeroesListFragment
+import com.franalarza.dragonballfights.ui.fragments.BattleFragment
+import com.franalarza.dragonballfights.ui.fragments.HeroesListFragment
 import com.franalarza.dragonballfights.models.HeroLive
 import com.franalarza.dragonballfights.utils.DataStore
 import com.franalarza.dragonballfights.viewModels.HeroesActivityViewModel
@@ -65,6 +65,12 @@ class HeroesActivity : AppCompatActivity(), CallBackHeroFighters {
 
                 R.id.battleItemNav -> if (fighters.size == 2) {
                     replaceFragment(BattleFragment(fighters))
+                } else {
+                    Toast.makeText(
+                        this,
+                        "The battle isn't ready, choose your fighter",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
             true
@@ -90,7 +96,7 @@ class HeroesActivity : AppCompatActivity(), CallBackHeroFighters {
         fighters = heroesToFight
         Toast.makeText(
             this,
-            "${heroesToFight[0].name} and your opponent is ${heroesToFight[1].name}",
+            "You choose ${heroesToFight[0].name} and your opponent is ${heroesToFight[1].name}",
             Toast.LENGTH_SHORT
         ).show()
 

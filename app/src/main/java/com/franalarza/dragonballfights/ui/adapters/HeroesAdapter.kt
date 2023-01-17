@@ -1,4 +1,4 @@
-package com.franalarza.dragonballfights.adapters
+package com.franalarza.dragonballfights.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.View

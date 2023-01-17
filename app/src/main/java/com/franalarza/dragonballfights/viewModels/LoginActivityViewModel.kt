@@ -54,7 +54,6 @@ class LoginActivityViewModel : ViewModel() {
         })
     }
 
-
     fun setValueOnMainThread(newValue: LoginActivityViewModel.LoginActivityState) {
         viewModelScope.launch(Dispatchers.Main) {
             loginState.value = newValue
@@ -65,10 +64,6 @@ class LoginActivityViewModel : ViewModel() {
         object Loading : LoginActivityState()
         data class SuccessToken(val token: String?) : LoginActivityState()
         data class ErrorToken(val message: String) : LoginActivityState()
-    }
-
-    fun validateEmailAndPassword(user: String, password: String): Boolean {
-        return user.isNotEmpty() && password.isNotEmpty()
     }
 
 }

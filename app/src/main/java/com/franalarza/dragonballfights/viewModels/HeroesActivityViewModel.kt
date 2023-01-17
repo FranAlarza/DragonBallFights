@@ -91,11 +91,11 @@ class HeroesActivityViewModel : ViewModel() {
         }
     }
 
-    fun setWinner(heroes: MutableList<HeroLive>, context: Context) {
+    fun setWinner(heroes: MutableList<HeroLive>,winnerMessage: (nameWinner: String) -> Unit) {
         val searchWinner = heroes.filter { it.energy > 0 }
 
         if (searchWinner.size == 1) {
-            Toast.makeText(context, "The winner is ${searchWinner.first().name}!!", Toast.LENGTH_SHORT).show()
+            winnerMessage(searchWinner.first().name)
         }
     }
 
@@ -105,6 +105,10 @@ class HeroesActivityViewModel : ViewModel() {
 
         lifeFighterOne.progress = 100
         lifeFighterTwo.progress = 100
+    }
+
+    fun restartGame(fighters: MutableList<HeroLive>) {
+        fighters.map { it.energy = 100 }
     }
 
 

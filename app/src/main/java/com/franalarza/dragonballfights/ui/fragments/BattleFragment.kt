@@ -1,4 +1,4 @@
-package com.franalarza.dragonballfights.fragments
+package com.franalarza.dragonballfights.ui.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -51,7 +51,7 @@ class BattleFragment(private val fighters: MutableList<HeroLive>) : Fragment() {
 
                 if (fighters[0].energy <= 0 || fighters[1].energy <= 0) {
                     val winner = fighters.first { it.energy > 0 }
-                    Toast.makeText(context, "El ganador es ${winner.name}", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, "The winner of the Battle is ${winner.name}", Toast.LENGTH_LONG).show()
                     binding.fabRound.isEnabled = false
                     round = 0
                 }

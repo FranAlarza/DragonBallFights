@@ -1,4 +1,4 @@
-package com.franalarza.dragonballfights.fragments
+package com.franalarza.dragonballfights.ui.fragments
 
 import android.content.Context
 import android.os.Bundle
@@ -13,8 +13,8 @@ import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.franalarza.dragonballfights.R
-import com.franalarza.dragonballfights.activities.CallBackHeroFighters
-import com.franalarza.dragonballfights.adapters.HeroesAdapter
+import com.franalarza.dragonballfights.ui.activities.CallBackHeroFighters
+import com.franalarza.dragonballfights.ui.adapters.HeroesAdapter
 import com.franalarza.dragonballfights.databinding.ActivityHeroesBinding
 import com.franalarza.dragonballfights.databinding.FragmentHeroesListBinding
 import com.franalarza.dragonballfights.models.HeroLive
@@ -38,7 +38,12 @@ class HeroesListFragment(private val heroes: MutableList<HeroLive>) : Fragment()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         createRecycler()
-        context?.let { viewModel.setWinner(heroes, it) }
+        context?.let {
+            viewModel.setWinner(heroes) {
+                Toast.makeText(context, "The Absolute winner is  ${it}!!", Toast.LENGTH_SHORT).show()
+                viewModel.restartGame(heroes)
+            }
+        }
     }
 
     private fun onItemSelected(fighters: MutableList<HeroLive>) {

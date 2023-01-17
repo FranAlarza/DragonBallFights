@@ -5,4 +5,7 @@
     <string name="nombre_o_email">Email o nombre de usuario</string>
     <string name="password">Contraseña</string>
     <string name="remember_password">Recordar mi contraseña</string>
+    <string name="heroes">Heroes</string>
+    <string name="battle">Batalla</string>
+    <string name="choose_your_hero">Elije tu heroe</string>
 </resources>

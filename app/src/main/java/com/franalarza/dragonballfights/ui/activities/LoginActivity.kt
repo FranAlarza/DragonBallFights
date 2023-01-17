@@ -1,4 +1,4 @@
-package com.franalarza.dragonballfights.activities
+package com.franalarza.dragonballfights.ui.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.CheckBox
 import android.widget.EditText
 import androidx.activity.viewModels
+import androidx.core.widget.addTextChangedListener
 import com.franalarza.dragonballfights.databinding.ActivityLoginBinding
 import com.franalarza.dragonballfights.utils.DataStore
 import com.franalarza.dragonballfights.viewModels.LoginActivityViewModel
@@ -43,6 +44,12 @@ class LoginActivity : AppCompatActivity() {
 
         passwordTextField?.setOnFocusChangeListener { _, hasFocus ->
            if (hasFocus) passwordTextField?.text = getPassword()
+        }
+
+        passwordTextField?.addTextChangedListener { text ->
+            if (text?.isNotEmpty() == true) {
+                binding.LoginButton?.isEnabled = true
+            }
         }
     }
 
