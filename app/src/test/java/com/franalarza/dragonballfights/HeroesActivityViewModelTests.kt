@@ -1,16 +1,10 @@
 package com.franalarza.dragonballfights
 
-import android.app.Application
-import android.widget.ProgressBar
 import com.franalarza.dragonballfights.models.HeroLive
 import com.franalarza.dragonballfights.viewModels.HeroesActivityViewModel
-import com.franalarza.dragonballfights.viewModels.LoginActivityViewModel
-import kotlinx.coroutines.currentCoroutineContext
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.manipulation.Ordering.Context
-import kotlin.coroutines.coroutineContext
 
 class HeroesActivityViewModelTests {
 

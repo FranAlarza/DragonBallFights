@@ -21,7 +21,6 @@ class LoginActivity : AppCompatActivity() {
     private var userTextField: EditText? = null
     private var passwordTextField: EditText? = null
     private var checkBox: CheckBox? = null
-    private val TOKEN_KEY = "token"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

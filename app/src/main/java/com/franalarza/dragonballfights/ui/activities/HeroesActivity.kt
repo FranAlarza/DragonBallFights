@@ -13,6 +13,7 @@ import com.franalarza.dragonballfights.databinding.ActivityHeroesBinding
 import com.franalarza.dragonballfights.ui.fragments.BattleFragment
 import com.franalarza.dragonballfights.ui.fragments.HeroesListFragment
 import com.franalarza.dragonballfights.models.HeroLive
+import com.franalarza.dragonballfights.utils.Constants
 import com.franalarza.dragonballfights.utils.DataStore
 import com.franalarza.dragonballfights.viewModels.HeroesActivityViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
@@ -96,7 +97,7 @@ class HeroesActivity : AppCompatActivity(), CallBackHeroFighters {
         fighters = heroesToFight
         Toast.makeText(
             this,
-            "You choose ${heroesToFight[0].name} and your opponent is ${heroesToFight[1].name}",
+            "You choose ${heroesToFight[Constants.firstFighter].name} and your opponent is ${heroesToFight[Constants.secondFighter].name}",
             Toast.LENGTH_SHORT
         ).show()
 

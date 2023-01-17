@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.franalarza.dragonballfights.models.HeroLive
 import com.franalarza.dragonballfights.models.Heroe
+import com.franalarza.dragonballfights.utils.Constants
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -46,13 +47,12 @@ class HeroesActivityViewModel : ViewModel() {
                 val responseBody = response.body?.string()
                 val heroesResponse: Array<Heroe> = Gson().fromJson(responseBody, Array<Heroe>::class.java)
                 var heroes = heroesResponse.map {
-                    HeroLive(it.id, it.name, it.description, it.photo, energy = 100, true)
+                    HeroLive(it.id, it.name, it.description, it.photo, energy = Constants.maxEnergy, true)
                 }
                 val filteredHeroes = heroes.filter { it.photo.contains("alfabeta") }.toMutableList()
                 setValueOnMainThread(HeroesActivityState.SuccessHeroList(filteredHeroes))
 
                 heroesList = filteredHeroes
-                Log.d("Heroes Respomnse", heroesList.toString())
             }
 
         })
@@ -73,10 +73,10 @@ class HeroesActivityViewModel : ViewModel() {
         val randomAmount = (10..60).random()
         val randomIndex = (0..1).random()
         if (randomIndex == 0) {
-            modifyLifeFighter(fighters[0].name, fighters, randomAmount)
+            modifyLifeFighter(fighters[Constants.firstFighter].name, fighters, randomAmount)
             barLifeFirstFighter.progress -= randomAmount
         } else {
-            modifyLifeFighter(fighters[1].name, fighters, randomAmount)
+            modifyLifeFighter(fighters[Constants.secondFighter].name, fighters, randomAmount)
             barLifeSecondFighter.progress -= randomAmount
         }
 
@@ -100,15 +100,15 @@ class HeroesActivityViewModel : ViewModel() {
     }
 
     fun restartBattle(fighters: MutableList<HeroLive>, lifeFighterOne: ProgressBar, lifeFighterTwo: ProgressBar) {
-        fighters[0].energy = 100
-        fighters[1].energy = 100
+        fighters[Constants.firstFighter].energy = Constants.maxEnergy
+        fighters[Constants.secondFighter].energy = Constants.maxEnergy
 
-        lifeFighterOne.progress = 100
-        lifeFighterTwo.progress = 100
+        lifeFighterOne.progress = Constants.maxEnergy
+        lifeFighterTwo.progress = Constants.maxEnergy
     }
 
     fun restartGame(fighters: MutableList<HeroLive>) {
-        fighters.map { it.energy = 100 }
+        fighters.map { it.energy = Constants.maxEnergy }
     }
 
 
