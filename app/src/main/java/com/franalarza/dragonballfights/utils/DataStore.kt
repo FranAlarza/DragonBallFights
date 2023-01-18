@@ -5,8 +5,8 @@ import android.content.Context
 class DataStore(context: Context) {
 
     companion object {
-        private val DATA_STORE = "dataStore"
-        val TOKEN_KEY = "tokenKey"
+        private const val DATA_STORE = "dataStore"
+        const val TOKEN_KEY = "tokenKey"
     }
     private val storage = context.getSharedPreferences(DATA_STORE, Context.MODE_PRIVATE)
 

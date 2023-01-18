@@ -3,8 +3,8 @@ package com.franalarza.dragonballfights.utils
 class Constants {
 
     companion object {
-        val firstFighter = 0
-        val secondFighter = 1
-        val maxEnergy = 100
+        const val firstFighter = 0
+        const val secondFighter = 1
+        const val maxEnergy = 100
     }
 }

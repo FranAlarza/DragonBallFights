@@ -21,8 +21,8 @@ class HeroesActivityViewModel : ViewModel() {
 
     var heroesList = mutableListOf<HeroLive>()
 
-    val heroesState: MutableLiveData<HeroesActivityViewModel.HeroesActivityState> by lazy {
-        MutableLiveData<HeroesActivityViewModel.HeroesActivityState>()
+    val heroesState: MutableLiveData<HeroesActivityState> by lazy {
+        MutableLiveData<HeroesActivityState>()
     }
 
     fun getHeroesList(hero: String = "", token: String) {
@@ -46,7 +46,7 @@ class HeroesActivityViewModel : ViewModel() {
             override fun onResponse(call: Call, response: Response) {
                 val responseBody = response.body?.string()
                 val heroesResponse: Array<Heroe> = Gson().fromJson(responseBody, Array<Heroe>::class.java)
-                var heroes = heroesResponse.map {
+                val heroes = heroesResponse.map {
                     HeroLive(it.id, it.name, it.description, it.photo, energy = Constants.maxEnergy, true)
                 }
                 val filteredHeroes = heroes.filter { it.photo.contains("alfabeta") }.toMutableList()
@@ -59,7 +59,7 @@ class HeroesActivityViewModel : ViewModel() {
 
     }
 
-    private fun setValueOnMainThread(newValue: HeroesActivityViewModel.HeroesActivityState) {
+    private fun setValueOnMainThread(newValue: HeroesActivityState) {
         viewModelScope.launch(Dispatchers.Main) {
             heroesState.value = newValue
         }
