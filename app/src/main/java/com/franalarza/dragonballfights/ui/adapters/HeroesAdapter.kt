@@ -26,6 +26,7 @@ class HeroesAdapter(
 
             if (hero.energy <= 0) {
                 binding.notAvailableMarker.visibility = View.VISIBLE
+                itemView.isEnabled = false
             } else {
                 binding.notAvailableMarker.visibility = View.GONE
             }

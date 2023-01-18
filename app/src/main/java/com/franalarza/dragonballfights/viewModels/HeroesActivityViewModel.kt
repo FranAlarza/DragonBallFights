@@ -111,6 +111,15 @@ class HeroesActivityViewModel : ViewModel() {
         fighters.map { it.energy = Constants.maxEnergy }
     }
 
+    fun checkIfFightersAreReady(fighters: MutableList<HeroLive>, stateButton: () -> Unit) {
+        val checkFighters = fighters.filter { it.energy <= 0 }
+        if (checkFighters.count() == 1) {
+            stateButton()
+        } else {
+            return
+        }
+    }
+
 
     sealed class HeroesActivityState {
         object Loading : HeroesActivityState()

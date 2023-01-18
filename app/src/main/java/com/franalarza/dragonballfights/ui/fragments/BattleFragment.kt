@@ -34,6 +34,9 @@ class BattleFragment(private val fighters: MutableList<HeroLive>) : Fragment() {
             setDataFighters()
         }
         setListeners()
+        viewModel.checkIfFightersAreReady(fighters) {
+            binding.fabRound.isEnabled = false
+        }
     }
 
     private fun setListeners() {

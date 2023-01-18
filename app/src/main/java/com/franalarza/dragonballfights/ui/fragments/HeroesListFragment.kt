@@ -53,11 +53,11 @@ class HeroesListFragment(private val heroes: MutableList<HeroLive>) : Fragment()
 
     private fun createRecycler() {
         val manager = LinearLayoutManager(context)
+        val decoration = DividerItemDecoration(context, manager.orientation)
         val adapter = HeroesAdapter(heroes) {
             onItemSelected(it)
         }
         adapter.updateData(heroes)
-        val decoration = DividerItemDecoration(context, manager.orientation)
         binding.rwHeroesList.adapter = adapter
         binding.rwHeroesList.layoutManager = manager
         binding.rwHeroesList.addItemDecoration(decoration)
